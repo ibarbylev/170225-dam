@@ -30,4 +30,3 @@ USE northwind;
    Если standard_cost > 20 то 'Expensive'
    В обратном случае 'Affordable' с применением оператора IF
  */
-
