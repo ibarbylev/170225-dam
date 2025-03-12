@@ -26,7 +26,7 @@ SELECT CURTIME() AS CurrentTime;
 
 ## DATE_FORMAT(date, format)
 Форматирует дату по заданному шаблону.
-https://docs.python.org/3/library/datetime.html#strftime-and-strptime-behavior
+https://dev.mysql.com/doc/refman/8.4/en/date-and-time-functions.html#function_date-format
 Пример:
 ```
 SELECT DATE_FORMAT(NOW(), '%d-%m-%Y %H:%i:%s') AS FormattedDateTime;

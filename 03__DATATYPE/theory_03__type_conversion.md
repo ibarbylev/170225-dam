@@ -69,6 +69,9 @@ SELECT CAST('123' AS UNSIGNED); -- 123
 SELECT CAST('2023-08-25' AS DATE);  -- 2023-08-25
 SELECT STR_TO_DATE('25-08-2023', '%d-%m-%Y'); -- 2023-08-25
 ```
+Ссылка на форматы в MySQL:
+https://dev.mysql.com/doc/refman/8.4/en/date-and-time-functions.html#function_date-format
+
 ### 2.4 Преобразование к BOOLEAN
 
 Можно использовать `CAST()`, но в MySQL нет явного типа BOOLEAN, поэтому используется `TINYINT(1)`:
