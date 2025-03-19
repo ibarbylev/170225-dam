@@ -12,7 +12,7 @@ SET
     <column1_name> = <value1>,
     <column2_name> = <value2>
 WHERE
-    <condition1>' IMIT N;
+    <condition1>' LIMIT N;
 */
 
 USE 170225_dam_ClassWork;
