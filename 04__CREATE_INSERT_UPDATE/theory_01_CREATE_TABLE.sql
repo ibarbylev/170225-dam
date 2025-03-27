@@ -21,7 +21,8 @@ CREATE TABLE IF NOT EXISTS Employees (
     BirthDate DATE,
     HireDate DATE DEFAULT (CURRENT_DATE),
     Salary DECIMAL(9, 2) CHECK (Salary > 0),
-    Email VARCHAR(100) UNIQUE
+    Email VARCHAR(100) UNIQUE,
+    Position ENUM('manager', 'developer', 'designer') DEFAULT 'manager'
 );
 
 /*
