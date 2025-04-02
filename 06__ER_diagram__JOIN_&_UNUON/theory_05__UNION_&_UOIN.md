@@ -37,7 +37,7 @@ name    value
 Alice   300
 Bob     200
 Charlie 100
-Bob     100
+Bob     200
 ```
 
 `UNION ALL` сохраняет все строки, включая дубликаты.  
@@ -47,11 +47,13 @@ Bob встречается дважды с разными значениями.
 ## 3. INNER JOIN: Только пересечения
 ```
 SELECT 
-    b.name, b.value AS bonus, f.value AS fine
+    b.name, 
+    b.value AS bonus, 
+    f.value AS fine
 FROM
-    bonuses b
+    bonuses AS b
         INNER JOIN
-    fines f ON b.name = f.name;
+    fines AS f ON b.name = f.name;
 
 === Результат ===
 
@@ -66,11 +68,13 @@ Bob есть в обеих таблицах.
 ## 4. `LEFT JOIN`: Все из bonuses (из левой таблица), только соответствия из fines (из правой)
 ```
 SELECT 
-    b.name, b.value AS bonus, f.value AS fine
+    b.name, 
+    b.value AS bonus, 
+    f.value AS fine
 FROM
-    bonuses b
+    bonuses AS b
         LEFT JOIN
-    fines f ON b.name = f.name;
+    fines AS f ON b.name = f.name;
 
 === Результат ===
 
@@ -87,11 +91,13 @@ Bob     200     200
 
 ```
 SELECT 
-    f.name, b.value AS bonus, f.value AS fine
+    f.name, 
+    b.value AS bonus, 
+    f.value AS fine
 FROM
-    bonuses b
+    bonuses AS b
         RIGHT JOIN
-    fines f ON b.name = f.name;
+    fines AS f ON b.name = f.name;
 
 === Результат ===
 
@@ -106,17 +112,21 @@ Bob     200     200
 ## 6. `FULL OUTER JOIN` (эмулируем через UNION)
 ```
 SELECT 
-    b.name, b.value AS bonus, f.value AS fine
+    b.name, 
+    b.value AS bonus, 
+    f.value AS fine
 FROM
-    bonuses b
+    bonuses AS b
         LEFT JOIN
-    fines f ON b.name = f.name 
+    fines AS f ON b.name = f.name 
 UNION SELECT 
-    f.name, b.value AS bonus, f.value AS fine
+    f.name, 
+    b.value AS bonus, 
+    f.value AS fine
 FROM
-    bonuses b
+    bonuses AS b
         RIGHT JOIN
-    fines f ON b.name = f.name;
+    fines AS f ON b.name = f.name;
 
 === Результат ===
 
@@ -140,9 +150,9 @@ SELECT
     f.name AS f_name, 
     f.value AS fine
 FROM
-    bonuses b
+    bonuses AS b
         CROSS JOIN
-    fines f;
+    fines AS f;
     
 
 === Результат ===
