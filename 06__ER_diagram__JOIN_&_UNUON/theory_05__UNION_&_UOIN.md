@@ -1,0 +1,132 @@
+## 1. UNION двух таблиц (без ALL, дубликаты удаляются)
+```
+SELECT 
+    name, value
+FROM
+    bonuses 
+UNION SELECT 
+    name, value
+FROM
+    fines;
+
+=== Результат ===
+
+name    value
+Alice   300
+Bob     200
+Charlie 100
+```
+
+ `UNION` объединяет строки из обеих таблиц, но удаляет дубликаты.  
+ У Bob два значения (200 и 100), но остался только один экземпляр (последний).
+
+## 2. `UNION ALL` двух таблиц (с дубликатами)
+```
+SELECT 
+    name, value
+FROM
+    bonuses 
+UNION ALL SELECT 
+    name, value
+FROM
+    fines;
+
+=== Результат ===
+
+name    value
+Alice   300
+Bob     200
+Charlie 100
+Bob     100
+```
+
+`UNION ALL` сохраняет все строки, включая дубликаты.  
+Bob встречается дважды с разными значениями. 
+
+
+## 3. INNER JOIN: Только пересечения
+```
+SELECT 
+    b.name, b.value AS bonus, f.value AS fine
+FROM
+    bonuses b
+        INNER JOIN
+    fines f ON b.name = f.name;
+
+=== Результат ===
+
+name    bonus   fine
+Bob     200     100
+```
+
+`INNER JOIN` показывает только тех, кто есть и в bonuses, и в fines. 
+Bob есть в обеих таблицах.
+
+
+## 4. `LEFT JOIN`: Все из bonuses (из левой таблица), только соответствия из fines (из правой)
+```
+SELECT 
+    b.name, b.value AS bonus, f.value AS fine
+FROM
+    bonuses b
+        LEFT JOIN
+    fines f ON b.name = f.name;
+
+=== Результат ===
+
+name    bonus   fine
+Alice   300     NULL
+Bob     200     100
+```
+
+`LEFT JOIN` берёт все строки из bonuses.  
+У Alice нет штрафа (NULL), а у Bob есть штраф 100.
+
+
+## 5. RIGHT JOIN: Все из fines, соответствия из bonuses
+
+```
+SELECT 
+    f.name, b.value AS bonus, f.value AS fine
+FROM
+    bonuses b
+        RIGHT JOIN
+    fines f ON b.name = f.name;
+
+=== Результат ===
+
+name    bonus   fine
+Charlie NULL    100
+Bob     200     100
+```
+`RIGHT JOIN` берёт все строки из fines.  
+У Charlie нет бонуса (NULL), а у Bob есть.
+
+
+## 6. `FULL OUTER JOIN` (эмулируем через UNION)
+```
+SELECT 
+    b.name, b.value AS bonus, f.value AS fine
+FROM
+    bonuses b
+        LEFT JOIN
+    fines f ON b.name = f.name 
+UNION SELECT 
+    f.name, b.value AS bonus, f.value AS fine
+FROM
+    bonuses b
+        RIGHT JOIN
+    fines f ON b.name = f.name;
+
+=== Результат ===
+
+name    bonus   fine
+Alice   300     NULL
+Bob     200     100
+Charlie NULL    100
+```
+
+`FULL OUTER JOIN` показывает абсолютно всех: 
+- Alice без штрафа, 
+- Charlie без бонуса, 
+- Bob и со штрафом, и с бонусом.

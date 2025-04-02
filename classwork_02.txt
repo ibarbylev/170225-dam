@@ -1,19 +1,109 @@
--- 01 Выбрать supplier_ids для тех поставщиков, у которых количество продуктов больше 2 Используем таблицу products
-SELECT * FROM northwind.products;
+USE northwind;
+
+-- 01 Выведите в одну общую выборку из таблиц customers и employees имена и фамилии клиентов и сотрудников.
+
+SELECT
+    first_name, last_name
+FROM
+    employees
+UNION ALL SELECT
+    first_name, last_name
+FROM
+    customers;
+
+
+-- 02 Добавьте дополнительный столбец в котором будет значение employee для сотрудника и customer для клиента.
+
+SELECT
+    first_name, last_name, 'employee' AS status
+FROM
+    employees
+UNION ALL SELECT
+    first_name, last_name, 'customer'
+FROM
+    customers;
+
+-- ================================================= JOIN ===================================================
+SELECT * FROM employees;
+SELECT * FROM employee_privileges;
+
+/* 01 Выведите все строки из объединенных таблиц employees и employee_privileges
+с помощью INNER/RIGHT и LEFT JOIN. Объясните полученные результаты. */
+SELECT
+    e.*, ep.privilege_id
+FROM
+    employees AS e
+        JOIN
+    employee_privileges AS ep ON e.id = ep.employee_id;
+
+
+SELECT
+    e.*, ep.privilege_id
+FROM
+    employees AS e
+        LEFT JOIN
+    employee_privileges AS ep ON e.id = ep.employee_id;
+
+
+SELECT
+    e.*, ep.privilege_id
+FROM
+    employees AS e
+        RIGHT JOIN
+    employee_privileges AS ep ON e.id = ep.employee_id;
+
+
+/* 02 Выведите идентификаторы заказов из таблицы order_details.
+ Дополнительно выведите вместо product_id  столбец с именем продукта product_name из products. */
+ SELECT * FROM order_details;
+ SELECT * FROM products;
+
+ SELECT
+    od.order_id AS order_id,
+    p.product_name AS product_name
+FROM
+    order_details AS od
+        JOIN
+    products AS p ON od.product_id = p.id;
+
+
+-- 03 Используя предыдущий запрос, посчитайте количество заказов для каждого наименования продукта.
+
+ SELECT
+    p.product_name AS product_name,
+    COUNT(od.order_id)
+FROM
+    order_details AS od
+        JOIN
+    products AS p ON od.product_id = p.id
+GROUP BY product_name;
 
 
 
-
-/* 02 Вы можете использовать несколько условий в HAVING
-Сгруппировать продукты по standard_cost и list_price
-Посчитать количество продуктов и вывести только те данные, где количество продуктов не менее 2 */
-
-
-
-/* 03 Часто HAVING и WHERE используются вместе, чтобы максимально сузить набор данных перед тем,
-как применять агрегатные функции и группировку.
-Выбрать только те продукты в quantity_per_unit встречается слово 'oz' как в нижнем так и в верхнем регистрах
-Сгруппировать по standard_cost Оставить только данные, где количество продуктов не менее 3 */
+/* 04 Выведите идентификаторы заказов из таблицы order_details.
+Дополнительно выведите вместо product_id  столбец с именем продукта product_name из products
+и столбец payment_amount из таблицы purchase_orders. */
+SELECT * FROM order_details;
+SELECT * FROM purchase_orders;
 
 
+SELECT
+    od.order_id, p.product_name, po.payment_amount
+FROM
+    order_details AS od
+        JOIN
+    products AS p ON od.product_id = p.id
+        JOIN
+    purchase_orders po ON od.purchase_order_id = po.id;
 
+
+-- 05 Оставить все строки из таблицы order_details.
+
+SELECT
+    od.order_id, p.product_name, po.payment_amount
+FROM
+    order_details AS od
+        LEFT JOIN
+    products AS p ON od.product_id = p.id
+        LEFT JOIN
+    purchase_orders po ON od.purchase_order_id = po.id;
