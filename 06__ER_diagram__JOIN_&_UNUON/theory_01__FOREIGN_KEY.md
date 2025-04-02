@@ -127,3 +127,14 @@ CREATE TABLE orders (
     RESTRICT / NO ACTION — чтобы нельзя случайно удалить или изменить важные данные.
 
 Подробности и дополнения снова здесь: https://dev.mysql.com/doc/refman/8.4/en/create-table-foreign-keys.html
+
+
+
+
+##  Как посмотреть на структуру существующей таблицы?
+
+### 1. Нажать на таблицу в схемах Workbench и посмотреть под схемами
+
+### 2. DESCRIBE table_name;
+
+### 3. SHOW CREATE TABLE table_name;
