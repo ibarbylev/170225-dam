@@ -19,7 +19,7 @@ CREATE TABLE orders (
 
 Добавляем данные:
 ```
-INSERT INTO goods (id, name) VALUES (1, 'Телефон'),;
+INSERT INTO goods (id, name) VALUES (1, 'Телефон');
 
 INSERT INTO orders (id, quantity, product_id) VALUES 
 (1, 5, 1), -- 5 телефонов
