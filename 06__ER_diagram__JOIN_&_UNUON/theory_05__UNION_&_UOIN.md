@@ -56,7 +56,7 @@ FROM
 === Результат ===
 
 name    bonus   fine
-Bob     200     100
+Bob     200     200
 ```
 
 `INNER JOIN` показывает только тех, кто есть и в bonuses, и в fines. 
@@ -76,7 +76,7 @@ FROM
 
 name    bonus   fine
 Alice   300     NULL
-Bob     200     100
+Bob     200     200
 ```
 
 `LEFT JOIN` берёт все строки из bonuses.  
@@ -97,7 +97,7 @@ FROM
 
 name    bonus   fine
 Charlie NULL    100
-Bob     200     100
+Bob     200     200
 ```
 `RIGHT JOIN` берёт все строки из fines.  
 У Charlie нет бонуса (NULL), а у Bob есть.
@@ -122,7 +122,7 @@ FROM
 
 name    bonus   fine
 Alice   300     NULL
-Bob     200     100
+Bob     200     200
 Charlie NULL    100
 ```
 
@@ -130,3 +130,30 @@ Charlie NULL    100
 - Alice без штрафа, 
 - Charlie без бонуса, 
 - Bob и со штрафом, и с бонусом.
+
+## 7. `CROSS JOIN`
+
+```
+SELECT 
+    b.name AS b_name, 
+    b.value AS bonus, 
+    f.name AS f_name, 
+    f.value AS fine
+FROM
+    bonuses b
+        CROSS JOIN
+    fines f;
+    
+
+=== Результат ===
+
+b_name  bonus   b_name   fine
+Bob	    200	    Charlie  100
+Alice	300	    Charlie  100
+Bob	    200	    Bob	     200
+Alice	300	    Bob	     200
+```
+
+`CROSS JOIN` — каждая строка из `bonuses` соединяется с каждой строкой из `fines`.  
+Если в `bonuses` было бы 3 строки, а в fines было бы 2 строки,  
+то получилось бы Декартово произведение всех строк: `3 × 2 = 6 строк.`

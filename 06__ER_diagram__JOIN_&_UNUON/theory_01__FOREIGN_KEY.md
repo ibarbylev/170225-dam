@@ -19,7 +19,7 @@ CREATE TABLE orders (
 
 Добавляем данные:
 ```
-INSERT INTO goods (id, name) VALUES (1, 'Телефон');
+INSERT INTO goods (id, name) VALUES (1, 'Телефон'),;
 
 INSERT INTO orders (id, quantity, product_id) VALUES 
 (1, 5, 1), -- 5 телефонов
@@ -129,12 +129,36 @@ CREATE TABLE orders (
 Подробности и дополнения снова здесь: https://dev.mysql.com/doc/refman/8.4/en/create-table-foreign-keys.html
 
 
-
-
 ##  Как посмотреть на структуру существующей таблицы?
 
-### 1. Нажать на таблицу в схемах Workbench и посмотреть под схемами
+#### 1. Нажать на таблицу в схемах Workbench и посмотреть под схемами
+```
+Table: orders
 
-### 2. DESCRIBE table_name;
+Columns:
+	id	int PK
+	quantity	int
+	product_id	int
+```
 
-### 3. SHOW CREATE TABLE table_name;
+#### 2. `DESCRIBE table_name`;
+
+```
+# Field     Type    Null    Key     Default     Extra
+id	        int	    NO	    PRI		
+quantity	int	    NO			
+product_id	int	    YES	    MUL	
+```
+
+#### 3. `SHOW CREATE TABLE table_name`;
+
+```
+CREATE TABLE `orders` (
+  `id` int NOT NULL,
+  `quantity` int NOT NULL,
+  `product_id` int DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `product_id` (`product_id`),
+  CONSTRAINT `orders_ibfk_1` FOREIGN KEY (`product_id`) REFERENCES `goods` (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci
+```
